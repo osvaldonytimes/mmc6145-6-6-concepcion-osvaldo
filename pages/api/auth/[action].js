@@ -2,7 +2,7 @@ import { withIronSessionApiRoute } from "iron-session/next";
 import sessionOptions from "../../../config/session";
 import db from "../../../db";
 
-// this file handles /api/auth/:action with any request method (GET, POST, etc)
+// this file handles /api/auth/:action with any request method (GET, POST,etc)
 export default withIronSessionApiRoute(async function handler(req, res) {
   const action = req.query.action;
   if (req.method === "POST") {
