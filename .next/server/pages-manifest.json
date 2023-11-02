@@ -2,5 +2,10 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/login": "pages/login.js"
+  "/search": "pages/search.js",
+  "/login": "pages/login.js",
+  "/api/book": "pages/api/book.js",
+  "/book/[id]": "pages/book/[id].js",
+  "/favorites": "pages/favorites.js",
+  "/api/auth/[action]": "pages/api/auth/[action].js"
 }

@@ -8,7 +8,6 @@ export default withIronSessionApiRoute(async function handler(req, res) {
   if (req.method === "POST") {
     switch (action) {
       case "login":
-        console.log("login call");
         await login(req, res);
         break;
       case "logout":
@@ -21,7 +20,7 @@ export default withIronSessionApiRoute(async function handler(req, res) {
         res.status(404).end();
     }
   } else {
-    res.status(405).end();
+    res.status(404).end();
   }
 }, sessionOptions);
 
