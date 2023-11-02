@@ -2,8 +2,5 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/search": "pages/search.js",
-  "/favorites": "pages/favorites.js",
-  "/book/[id]": "pages/book/[id].js",
-  "/api/book": "pages/api/book.js"
+  "/favorites": "pages/favorites.js"
 }

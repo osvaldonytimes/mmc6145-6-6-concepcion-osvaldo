@@ -8,54 +8,27 @@ import BookList from "../components/bookList";
 import db from "../db";
 
 export const getServerSideProps = withIronSessionSsr(
-  async function getServerSideProps({ req, res }) {
-    try {
-      const user = req.session.user;
-      if (!user) {
-        console.error("No user found in the session.");
-        return {
-          redirect: {
-            destination: "/login",
-            permanent: false,
-          },
-        };
-      }
-
-      let books;
-      try {
-        books = await db.book.getAll(user.id);
-      } catch (error) {
-        console.error("Error fetching books:", error);
-        throw new Error("Failed to retrieve books from database."); // This will propagate to the outer try-catch
-      }
-
-      // No books means db.book.getAll failed because user does not exist or returned an empty list
-      if (!books) {
-        console.error("No books found for user:", user.id);
-        req.session?.destroy();
-        return {
-          redirect: {
-            destination: "/login",
-            permanent: false,
-          },
-        };
-      }
-
+  async function getServerSideProps({ req }) {
+    const user = req.session.user;
+    let books;
+    if (user) books = await db.book.getAll(user.id);
+    // no books means db.book.getAll failed because user does not exist
+    if (!books) {
+      req.session.destroy();
       return {
-        props: {
-          user: req.session.user,
-          isLoggedIn: true,
-          favoriteBooks: books,
+        redirect: {
+          destination: "/login",
+          permanent: false,
         },
       };
-    } catch (error) {
-      console.error("Error in getServerSideProps:", error);
-
-      // Return a generic error message to the client but detailed logs will have more info
-      return {
-        notFound: true,
-      };
     }
+    return {
+      props: {
+        user: req.session.user,
+        isLoggedIn: true,
+        favoriteBooks: books,
+      },
+    };
   },
   sessionOptions
 );
